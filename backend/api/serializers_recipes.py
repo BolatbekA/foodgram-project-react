@@ -81,16 +81,16 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags = self.initial_data.get('tags')
         if not tags:
             raise serializers.ValidationError(
-                'Убедитесь, что добавлен хотя бы один тег'
+                'Минимум один тег'
             )
         if len(tags) != len(set(tags)):
-            raise serializers.ValidationError('Теги должны быть уникальными')
+            raise serializers.ValidationError('Тег не уникальный')
         data['tags'] = tags
 
         ingredients = self.initial_data.get('ingredients')
         if not ingredients:
             raise serializers.ValidationError(
-                'Нужен хоть один ингридиент для рецепта'
+                'Минимум один ингридиент для рецепта'
             )
         ingredient_list = []
         for ingredient_item in ingredients:
@@ -99,19 +99,19 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
             if ingredient in ingredient_list:
                 raise serializers.ValidationError(
-                    'Ингридиенты должны быть уникальными'
+                    'Ингридиенты не уникальны'
                 )
             ingredient_list.append(ingredient)
             if int(ingredient_item['amount']) <= 0:
                 raise serializers.ValidationError(
-                    'Убедитесь, что значение количества ингредиента больше 0'
+                    'Значение должно быть больше 0'
                 )
         data['ingredients'] = ingredients
 
         cooking_time = self.initial_data.get('cooking_time')
         if not int(cooking_time) > 0:
             raise serializers.ValidationError(
-                'Убедитесь, что время приготовления больше нуля'
+                'Время приготовления должно быть больше 0'
             )
         data['cooking_time'] = cooking_time
         return data
