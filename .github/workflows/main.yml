@@ -71,10 +71,14 @@ jobs:
             script: |
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY_FRONT }}
-              echo 'я тут'
+              echo 'я тут1'
               ls -a
               rm .env
+              echo 'я тут2'
+              ls -a              
               touch .env
+              echo 'я тут3'
+              ls -a              
               echo DJ_SECRET_KEY=${{ secrets.DJ_SECRET_KEY }} >> .env
               echo DEBUG=${{ secrets.DEBUG }} >> .env
               echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
