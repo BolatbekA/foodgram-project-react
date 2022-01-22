@@ -46,7 +46,7 @@ jobs:
             push: true
             context: ./backend
             file: ./backend/Dockerfile
-            tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
+            tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
 
         # - name: Push frontend to Docker Hub
         #   uses: docker/build-push-action@v2
