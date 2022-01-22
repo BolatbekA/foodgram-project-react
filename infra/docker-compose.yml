@@ -13,7 +13,6 @@ services:
       - ../.env
 
   backend:
-    # image: bolatbek/foodgram-project-react:latest
     
     build:
       context: ../backend
