@@ -71,6 +71,8 @@ jobs:
             script: |
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY_FRONT }}
+              echo 'я тут'
+              ls -a
               rm .env
               touch .env
               echo DJ_SECRET_KEY=${{ secrets.DJ_SECRET_KEY }} >> .env
