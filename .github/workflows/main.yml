@@ -72,14 +72,16 @@ jobs:
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY_FRONT }}
               echo 'я тут1'
-              ls -a
+              pwd
               rm .env
               echo 'я тут2'
-              ls -a              
+              pwd
               touch .env
               echo 'я тут3'
-              ls -a              
+              pwd
               echo DJ_SECRET_KEY=${{ secrets.DJ_SECRET_KEY }} >> .env
+              echo 'я тут4'
+              pwd
               echo DEBUG=${{ secrets.DEBUG }} >> .env
               echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
               echo DB_NAME=${{ secrets.DB_NAME }} >> .env
