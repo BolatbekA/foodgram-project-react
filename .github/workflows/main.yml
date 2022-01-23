@@ -66,8 +66,9 @@ jobs:
             host: ${{ secrets.HOST }}
             username: ${{ secrets.USER }}
             key: ${{ secrets.SSH_KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
             source: 'infra/*, !infra/.env, frontend/*, docs/*'
-            target: /home/${{ secrets.PROJECT_DIR }}
+            target: ${{ secrets.PROJECT_DIR }}
 
         - name: executing remote ssh commands to deploy
           uses: appleboy/ssh-action@master
