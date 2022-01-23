@@ -1,24 +1,25 @@
 version: '3.3'
 
 services:
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - /var/lib/postgresql/data/
+    restart: always
+    env_file:
+      - ../.env
+
   frontend:
+    image: bolatbek/frontend:latest
     build:
       context: ../frontend
       dockerfile: Dockerfile
     volumes:
       - ../frontend/:/app/result_build/
-  db:
-    image: postgres:13.0-alpine
-    volumes:
-      - /var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-    env_file:
-      - ./.env
+      
+
   backend:
-    image: fibboo/foodgram-backend:latest
+    image: bolatbek/backend:latest
     restart: always
     volumes:
       - static_value:/app/static/
