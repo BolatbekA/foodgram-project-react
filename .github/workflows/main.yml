@@ -67,8 +67,8 @@ jobs:
             username: ${{ secrets.USER }}
             key: ${{ secrets.SSH_KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
-            source: '*'
-            target: 'bolatbek'
+            source: "frontend/*"
+            target: "bolatbek"
 
         - name: executing remote ssh commands to deploy
           uses: appleboy/ssh-action@master
