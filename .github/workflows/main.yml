@@ -74,11 +74,11 @@ jobs:
           uses: appleboy/ssh-action@master
           with:
             host: ${{ secrets.HOST }}
-            username: ${{ secrets.USER }}
+            username: bolatbek
             key: ${{ secrets.SSH_KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
-              cd bolatbek/infra/
+              cd infra/
               sudo pwd
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY_FRONT }}
