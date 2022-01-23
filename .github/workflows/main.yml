@@ -69,6 +69,7 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             stack_file_name: docker-compose.yml
             script: |
+              cd bolatbek/
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY_FRONT }}
               echo 'я тут1'
@@ -79,11 +80,9 @@ jobs:
               touch .env
               echo 'я тут3'
               pwd
-              echo DJ_SECRET_KEY=${{ secrets.DJ_SECRET_KEY }} >> .env
+              echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
               echo 'я тут4'
               pwd
-              echo DEBUG=${{ secrets.DEBUG }} >> .env
-              echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
               echo DB_NAME=${{ secrets.DB_NAME }} >> .env
               echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
               echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
