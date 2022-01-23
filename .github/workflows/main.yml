@@ -67,7 +67,7 @@ jobs:
             username: ${{ secrets.USER }}
             key: ${{ secrets.SSH_KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
-            source: "frontend/*"
+            source: frontend/
             target: "bolatbek"
 
         - name: executing remote ssh commands to deploy
