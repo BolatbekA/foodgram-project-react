@@ -67,8 +67,7 @@ jobs:
             username: ${{ secrets.USER }}
             key: ${{ secrets.SSH_KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
-            sourse: 'foodram-project-react/frontend/'
-            # source: 'infra/*, !infra/.env, frontend/*, docs/*'
+            source: 'infra/*, !infra/.env, frontend/*, docs/*'
             target: 'bolatbek'
 
         - name: executing remote ssh commands to deploy
