@@ -10,14 +10,17 @@ class Tag(models.Model):
     slug = models.SlugField(max_length=200, unique=True,
                             verbose_name='слаг тeга')
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        ordering = ["name"]
 
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=200, verbose_name='название')
     measurement_unit = models.CharField(max_length=200,
                                         verbose_name='единица измерения')
+
+    class Meta:
+        ordering = ["name"]
 
 
 class Recipe(models.Model):
@@ -44,6 +47,9 @@ class Recipe(models.Model):
         "date published", auto_now_add=True, db_index=True
     )
 
+    class Meta:
+        ordering = ["-pub_date"]
+
 
 class IngredientAmount(models.Model):
     ingredient = models.ForeignKey(
@@ -60,6 +66,15 @@ class IngredientAmount(models.Model):
         verbose_name="Количество",
     )
 
+    class Meta:
+        ordering = ["-id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["ingredient", "recipe"],
+                name="unique ingredients recipe",
+            )
+        ]
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(
@@ -73,6 +88,15 @@ class Favorite(models.Model):
         related_name="favorites",
         verbose_name="Рецепт",
     )
+
+    class Meta:
+        ordering = ["-id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "recipe"],
+                name="unique favorite recipe for user",
+            )
+        ]
 
 
 class Cart(models.Model):
@@ -88,3 +112,11 @@ class Cart(models.Model):
         related_name="cart",
         verbose_name="Рецепт",
     )
+
+    class Meta:
+        ordering = ["-id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "recipe"], name="unique cart user"
+            )
+        ]
