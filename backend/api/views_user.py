@@ -9,11 +9,13 @@ from users.models import Follow, User
 
 from .pagination import CustomUserPagination
 from .serializers_recipes import FollowSerializer
+from .permissions import IsOwnerOrReadOnly
 from .serializers_user import Follow
 
 
 class CustomUserViewSet(UserViewSet):
     pagination_class = CustomUserPagination
+    permission_classes = (IsOwnerOrReadOnly,)
 
     @action(
         detail=True,

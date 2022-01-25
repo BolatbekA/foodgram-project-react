@@ -67,7 +67,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return None
 
     @action(
-        detail=False, methods=['get'], permission_classes=[IsAuthenticated]
+        detail=False, methods=['get'], permission_classes=(IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
         final_list = {}
