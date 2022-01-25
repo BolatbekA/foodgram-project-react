@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from recipes.models import (Cart, Favorite, Ingredient, IngredientAmount,
                             Recipe, Tag)
 
-from .filters import IngredientSearchFilter
+from .filters import IngredientSearchFilter, AuthorAndTagFilter
 from .pagination import CustomUserPagination
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers_recipes import (CropRecipeSerializer, IngredientSerializer,
@@ -37,7 +37,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
     permission_classes = (IsOwnerOrReadOnly,)
     pagination_class = CustomUserPagination
-    # filter_class = AuthorAndTagFilter
+    filter_class = AuthorAndTagFilter
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
