@@ -7,4 +7,4 @@ class ApiPagination(PageNumberPagination):
 
 class CustomUserPagination(PageNumberPagination):
     page_size = 1
-    page_size_query_param = "limit"
+    page_size_query_param = 'limit'
