@@ -10,7 +10,7 @@ class User(AbstractUser):
         unique=True,
         blank=False,
         error_messages={
-            'unique': ("User с таким email уже существует."),
+            'unique': ('User с таким email уже существует.'),
         },
     )
     username = models.CharField(
@@ -18,7 +18,7 @@ class User(AbstractUser):
         unique=True,
         blank=False,
         error_messages={
-            'unique': ("User с таким username уже существует."),
+            'unique': ('User с таким username уже существует.'),
         },
     )
     first_name = models.CharField(
@@ -29,37 +29,37 @@ class User(AbstractUser):
         max_length=150,
         blank=False,
     )
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ("first_name", "last_name", "username")
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('first_name', 'last_name', 'username')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     objects = AppUserManager()
 
     class Meta:
-        ordering = ['date_joined']
+        ordering = ('date_joined',)
 
 
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="follower",
-        verbose_name="Подписчик",
+        related_name='follower',
+        verbose_name='Подписчик',
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following",
-        verbose_name="Автор",
+        related_name='following',
+        verbose_name='Автор',
     )
 
     class Meta:
-        ordering = ["-id"]
-        verbose_name = "Подписка"
-        verbose_name_plural = "Подписки"
-        constraints = [
+        ordering = ('-id',)
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        constraints = (
             models.UniqueConstraint(
-                fields=["user", "author"],
-                name="unique follow",
-            )
-        ]
+                fields=('user', 'author',),
+                name='unique follow',
+            ),
+        )

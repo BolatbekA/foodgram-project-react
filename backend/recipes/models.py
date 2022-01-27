@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core import validators
 from django.db import models
 
 User = get_user_model()
@@ -11,7 +12,7 @@ class Tag(models.Model):
                             verbose_name='слаг тeга')
 
     class Meta:
-        ordering = ["name"]
+        ordering = ('name',)
 
 
 class Ingredient(models.Model):
@@ -20,7 +21,7 @@ class Ingredient(models.Model):
                                         verbose_name='единица измерения')
 
     class Meta:
-        ordering = ["name"]
+        ordering = ('name',)
 
 
 class Recipe(models.Model):
@@ -33,90 +34,92 @@ class Recipe(models.Model):
     )
     ingredients = models.ManyToManyField(
         Ingredient,
-        through="IngredientAmount",
-        verbose_name="Ингредиенты",
-        related_name="recipes",
+        through='IngredientAmount',
+        verbose_name='Ингредиенты',
+        related_name='recipes',
     )
-    name = models.CharField(verbose_name="Название", max_length=100)
-    image = models.ImageField(verbose_name="Изображение", upload_to="recipes/")
-    text = models.TextField(verbose_name="Описание")
+    name = models.CharField(verbose_name='Название', max_length=100)
+    image = models.ImageField(verbose_name='Изображение', upload_to='recipes/')
+    text = models.TextField(verbose_name='Описание')
     cooking_time = models.PositiveSmallIntegerField(
-        verbose_name="Время приготовления (мин.)"
+        validators=(validators.MinValueValidator(1),),
+        verbose_name='Время приготовления (мин.)',
     )
     pub_date = models.DateTimeField(
-        "date published", auto_now_add=True, db_index=True
+        'date published', auto_now_add=True, db_index=True
     )
 
     class Meta:
-        ordering = ["-pub_date"]
+        ordering = ('-pub_date',)
 
 
 class IngredientAmount(models.Model):
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        verbose_name="Ингридиент",
+        verbose_name='Ингредиент',
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        verbose_name="Рецепт",
+        verbose_name='Рецепт',
     )
     amount = models.PositiveSmallIntegerField(
-        verbose_name="Количество",
+        validators=(validators.MinValueValidator(1),),
+        verbose_name='Количество',
     )
 
     class Meta:
-        ordering = ["-id"]
-        constraints = [
+        ordering = ('-id',)
+        constraints = (
             models.UniqueConstraint(
-                fields=["ingredient", "recipe"],
+                fields=('ingredient', 'recipe',),
                 name="unique ingredients recipe",
-            )
-        ]
+            ),
+        )
 
 
 class Favorite(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        verbose_name="Пользователь",
+        verbose_name='Пользователь',
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="favorites",
-        verbose_name="Рецепт",
+        related_name='favorites',
+        verbose_name='Рецепт',
     )
 
     class Meta:
-        ordering = ["-id"]
-        constraints = [
+        ordering = ('-id',)
+        constraints = (
             models.UniqueConstraint(
-                fields=["user", "recipe"],
-                name="unique favorite recipe for user",
-            )
-        ]
+                fields=('user', 'recipe',),
+                name='unique favorite recipe for user',
+            ),
+        )
 
 
 class Cart(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="cart",
-        verbose_name="Пользователь",
+        related_name='cart',
+        verbose_name='Пользователь',
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="cart",
-        verbose_name="Рецепт",
+        related_name='cart',
+        verbose_name='Рецепт',
     )
 
     class Meta:
-        ordering = ["-id"]
-        constraints = [
+        ordering = ('-id',)
+        constraints = (
             models.UniqueConstraint(
-                fields=["user", "recipe"], name="unique cart user"
-            )
-        ]
+                fields=('user', 'recipe',), name='unique cart user'
+            ),
+        )

@@ -19,7 +19,7 @@ class CustomUserViewSet(UserViewSet):
 
     @action(
         detail=True,
-        methods=['post'],
+        methods=('post',),
         permission_classes=(IsAuthenticated,)
     )
     def subscribe(self, request, id=None):
@@ -59,7 +59,7 @@ class CustomUserViewSet(UserViewSet):
             {'errors': 'Вы уже отписались'}, status=status.HTTP_400_BAD_REQUEST
         )
 
-    @action(detail=False, permission_classes=[IsAuthenticated])
+    @action(detail=False, permission_classes=(IsAuthenticated,))
     def subscriptions(self, request):
         user = request.user
         queryset = Follow.objects.filter(user=user)

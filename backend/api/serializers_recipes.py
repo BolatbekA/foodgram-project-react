@@ -30,12 +30,12 @@ class IngredientAmountSerializer(serializers.ModelSerializer):
     class Meta:
         model = IngredientAmount
         fields = ('id', 'name', 'measurement_unit', 'amount',)
-        validators = [
+        validators = (
             UniqueTogetherValidator(
                 queryset=IngredientAmount.objects.all(),
-                fields=['ingredient', 'recipe'],
-            )
-        ]
+                fields=('ingredient', 'recipe',),
+            ),
+        )
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -77,7 +77,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             return False
         return Recipe.objects.filter(cart__user=user, id=obj.id).exists()
 
-    def validate(self, data):
+    def validate_tag(self, data):
         tags = self.initial_data.get('tags')
         if not tags:
             raise serializers.ValidationError(
@@ -86,7 +86,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         if len(tags) != len(set(tags)):
             raise serializers.ValidationError('Тег не уникальный')
         data['tags'] = tags
+        return data
 
+    def validate_ingredients(self, data):
         ingredients = self.initial_data.get('ingredients')
         if not ingredients:
             raise serializers.ValidationError(
@@ -107,7 +109,9 @@ class RecipeSerializer(serializers.ModelSerializer):
                     'Значение должно быть больше 0'
                 )
         data['ingredients'] = ingredients
+        return data
 
+    def validate_cooking_time(self, data):
         cooking_time = self.initial_data.get('cooking_time')
         if not int(cooking_time) > 0:
             raise serializers.ValidationError(
