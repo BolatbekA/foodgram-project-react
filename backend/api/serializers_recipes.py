@@ -5,7 +5,6 @@ from rest_framework.validators import UniqueTogetherValidator
 
 from recipes.models import Ingredient, IngredientAmount, Recipe, Tag
 from users.models import Follow
-
 from .serializers_user import CustomUserSerializer
 
 
