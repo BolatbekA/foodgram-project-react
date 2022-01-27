@@ -40,8 +40,8 @@ class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'recipe')
     empty_value_display = '-empty-'
 
-admin.site.register(Tag, TagAdmin)
-admin.site.register(Ingredient, IngredientAdmin)
-admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(Cart)
-admin.site.register(Favorite)
+# admin.site.register(Tag, TagAdmin)
+# admin.site.register(Ingredient, IngredientAdmin)
+# admin.site.register(Recipe, RecipeAdmin)
+# admin.site.register(Cart)
+# admin.site.register(Favorite)
