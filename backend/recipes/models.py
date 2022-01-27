@@ -74,7 +74,7 @@ class IngredientAmount(models.Model):
         constraints = (
             models.UniqueConstraint(
                 fields=('ingredient', 'recipe',),
-                name="unique ingredients recipe",
+                name='unique ingredients recipe',
             ),
         )
 

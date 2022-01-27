@@ -19,7 +19,7 @@ class CustomUserViewSet(UserViewSet):
 
     @action(
         detail=True,
-        methods=('post',),
+        methods=['post'],
         permission_classes=(IsAuthenticated,)
     )
     def subscribe(self, request, id=None):
