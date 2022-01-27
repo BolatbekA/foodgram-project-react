@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import Cart, Favorite, Ingredient, Recipe, Tag
+from .models import Cart, Favorite, Ingredient, Recipe, Tag, IngredientAmount
 
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'measurement_unit')
     search_fields = ('name',)
-    empty_value_display = '-пусто-'
+    empty_value_display = '-empty-'
 
 
 @admin.register(Tag)
@@ -20,7 +20,7 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'author')
+    list_display = ('pk', 'name', 'author', 'favorite_count')
     search_fields = ('name', 'author', 'tags')
     list_filter = ('name', 'author', 'tags')
     empty_value_display = '-empty-'
@@ -40,8 +40,8 @@ class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'recipe')
     empty_value_display = '-empty-'
 
-# admin.site.register(Tag, TagAdmin)
-# admin.site.register(Ingredient, IngredientAdmin)
-# admin.site.register(Recipe, RecipeAdmin)
-# admin.site.register(Cart)
-# admin.site.register(Favorite)
+
+@admin.register(IngredientAmount)
+class IngredientAmountAdmin(admin.ModelAdmin):
+    list_display = ('ingredient', 'recipe', 'amount')
+    empty_value_display = '-empty-'
