@@ -30,12 +30,12 @@ class IngredientAmountSerializer(serializers.ModelSerializer):
     class Meta:
         model = IngredientAmount
         fields = ('id', 'name', 'measurement_unit', 'amount',)
-        validators = (
+        validators = [
             UniqueTogetherValidator(
                 queryset=IngredientAmount.objects.all(),
-                fields=('ingredient', 'recipe',),
-            ),
-        )
+                fields=['ingredient', 'recipe'],
+            )
+        ]
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -97,14 +97,14 @@ class RecipeSerializer(serializers.ModelSerializer):
         ingredient_list = []
         for ingredient_item in ingredients:
             ingredient = get_object_or_404(
-                Ingredient, id=ingredient_item('id')
+                Ingredient, id=ingredient_item['id']
             )
             if ingredient in ingredient_list:
                 raise serializers.ValidationError(
                     'Ингридиенты не уникальны'
                 )
             ingredient_list.append(ingredient)
-            if int(ingredient_item('amount')) <= 0:
+            if int(ingredient_item['amount']) <= 0:
                 raise serializers.ValidationError(
                     'Значение должно быть больше 0'
                 )
