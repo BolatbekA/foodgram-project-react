@@ -25,6 +25,9 @@ class RecipeAdmin(admin.ModelAdmin):
     list_filter = ('name', 'author', 'tags')
     empty_value_display = '-empty-'
 
+    def favorite_count(self, obj):
+        return Favorite.objects.filter(recipe=obj).count()
+
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
@@ -36,3 +39,9 @@ class CartAdmin(admin.ModelAdmin):
 class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'recipe')
     empty_value_display = '-empty-'
+
+admin.site.register(Tag, TagAdmin)
+admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Cart)
+admin.site.register(Favorite)
