@@ -134,3 +134,4 @@ dmypy.json
 # other
 .vscode/
 .dbeaver/
+.backend/media
