@@ -91,7 +91,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         ingredients = self.initial_data.get('ingredients')
         if not ingredients:
             raise serializers.ValidationError(
-                'Минимум один ингридиент для рецепта'
+                'Минимум один ингредиент для рецепта'
             )
         ingredient_list = []
         for ingredient_item in ingredients:
@@ -100,12 +100,12 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
             if ingredient in ingredient_list:
                 raise serializers.ValidationError(
-                    'Ингридиенты не уникальны'
+                    'Ингредиенты не уникальны'
                 )
             ingredient_list.append(ingredient)
             if int(ingredient_item['amount']) <= 0:
                 raise serializers.ValidationError(
-                    'Значение должно быть больше 0'
+                    'Вес ингридента должен быть больше 0'
                 )
         return data
 
